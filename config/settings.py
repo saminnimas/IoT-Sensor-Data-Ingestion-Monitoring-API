@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'sensors',
+    'drf_spectacular',
 ]
 
 MIDDLEWARE = [
@@ -83,6 +84,27 @@ DATABASES = {
         'HOST': 'db', # This matches the service name in docker-compose.yml
         'PORT': '5432',
     }
+}
+
+# for redis caching
+CACHES = {
+    "default": {
+        "BACKEND": "django.core.cache.backends.redis.RedisCache",
+        "LOCATION": "redis://redis:6379/1", # 'redis' matches the service name in docker-compose
+    }
+}
+
+
+# drf-spectacular settings for API documentation
+REST_FRAMEWORK = {
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+}
+
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'IoT Sensor API',
+    'DESCRIPTION': 'Real-time IoT data ingestion and caching system.',
+    'VERSION': '1.0.0',
+    'SERVE_INCLUDE_SCHEMA': False,
 }
 
 
