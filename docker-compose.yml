@@ -13,13 +13,19 @@ services:
     ports:
       - "5432:5432"
 
-  # Your Django Application Container
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+
+  # Django Application Container
   web:
     build: .
     command: python manage.py runserver 0.0.0.0:8000
     volumes:
-      - .:/app # Syncs your local code changes to the container in real-time
+      - .:/app # Syncs local code changes to the container in real-time
     ports:
       - "8000:8000"
     depends_on:
       - db # Ensures the database starts before Django
+      - redis # Ensures Redis starts before Django
