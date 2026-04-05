@@ -1,0 +1,4 @@
+.venv
+command_stacks.txt
+db.sqlite3
+__pycache__/
